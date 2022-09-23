@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ZB\\source\\repos\\Microservice\\ReportService.Api\\ReportService.Api.csproj": {}
+    "C:\\Users\\ZB\\Documents\\GitHub\\Microservice\\Microservice\\ReportService.Api\\ReportService.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ZB\\source\\repos\\Microservice\\ReportService.Api\\ReportService.Api.csproj": {
+    "C:\\Users\\ZB\\Documents\\GitHub\\Microservice\\Microservice\\ReportService.Api\\ReportService.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ZB\\source\\repos\\Microservice\\ReportService.Api\\ReportService.Api.csproj",
+        "projectUniqueName": "C:\\Users\\ZB\\Documents\\GitHub\\Microservice\\Microservice\\ReportService.Api\\ReportService.Api.csproj",
         "projectName": "ReportService.Api",
-        "projectPath": "C:\\Users\\ZB\\source\\repos\\Microservice\\ReportService.Api\\ReportService.Api.csproj",
+        "projectPath": "C:\\Users\\ZB\\Documents\\GitHub\\Microservice\\Microservice\\ReportService.Api\\ReportService.Api.csproj",
         "packagesPath": "C:\\Users\\ZB\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ZB\\source\\repos\\Microservice\\ReportService.Api\\obj\\",
+        "outputPath": "C:\\Users\\ZB\\Documents\\GitHub\\Microservice\\Microservice\\ReportService.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"

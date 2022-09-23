@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ZB\\source\\repos\\Microservice\\ContactService.Api\\ContactService.Api.csproj": {}
+    "C:\\Users\\ZB\\Documents\\GitHub\\Microservice\\Microservice\\ContactService.Api\\ContactService.Api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ZB\\source\\repos\\Microservice\\ContactService.Api\\ContactService.Api.csproj": {
+    "C:\\Users\\ZB\\Documents\\GitHub\\Microservice\\Microservice\\ContactService.Api\\ContactService.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ZB\\source\\repos\\Microservice\\ContactService.Api\\ContactService.Api.csproj",
+        "projectUniqueName": "C:\\Users\\ZB\\Documents\\GitHub\\Microservice\\Microservice\\ContactService.Api\\ContactService.Api.csproj",
         "projectName": "ContactService.Api",
-        "projectPath": "C:\\Users\\ZB\\source\\repos\\Microservice\\ContactService.Api\\ContactService.Api.csproj",
+        "projectPath": "C:\\Users\\ZB\\Documents\\GitHub\\Microservice\\Microservice\\ContactService.Api\\ContactService.Api.csproj",
         "packagesPath": "C:\\Users\\ZB\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ZB\\source\\repos\\Microservice\\ContactService.Api\\obj\\",
+        "outputPath": "C:\\Users\\ZB\\Documents\\GitHub\\Microservice\\Microservice\\ContactService.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
@@ -43,6 +43,28 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.8, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
