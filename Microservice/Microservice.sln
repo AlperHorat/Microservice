@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32630.194
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{2AA940AF-BF41-4761-A3A4-66EE63A76995}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ContactService", "ContactService", "{27B8BD33-0212-47BF-8A11-5AA6D007CA2E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReportService", "ReportService", "{CB856B42-8BD6-4919-8305-204F3DAA5551}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContactService.Api", "ContactService.Api\ContactService.Api.csproj", "{BCF37D71-0517-4ECC-8A1A-5741D5D2EEEE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReportService.Api", "ReportService.Api\ReportService.Api.csproj", "{ACDBCFC2-CC08-445F-9DF2-1D38FD1B3971}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BCF37D71-0517-4ECC-8A1A-5741D5D2EEEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCF37D71-0517-4ECC-8A1A-5741D5D2EEEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCF37D71-0517-4ECC-8A1A-5741D5D2EEEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCF37D71-0517-4ECC-8A1A-5741D5D2EEEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACDBCFC2-CC08-445F-9DF2-1D38FD1B3971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACDBCFC2-CC08-445F-9DF2-1D38FD1B3971}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACDBCFC2-CC08-445F-9DF2-1D38FD1B3971}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACDBCFC2-CC08-445F-9DF2-1D38FD1B3971}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{27B8BD33-0212-47BF-8A11-5AA6D007CA2E} = {2AA940AF-BF41-4761-A3A4-66EE63A76995}
+		{CB856B42-8BD6-4919-8305-204F3DAA5551} = {2AA940AF-BF41-4761-A3A4-66EE63A76995}
+		{BCF37D71-0517-4ECC-8A1A-5741D5D2EEEE} = {27B8BD33-0212-47BF-8A11-5AA6D007CA2E}
+		{ACDBCFC2-CC08-445F-9DF2-1D38FD1B3971} = {CB856B42-8BD6-4919-8305-204F3DAA5551}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {803EC732-E95D-4971-8CC4-DDB2842651ED}
+	EndGlobalSection
+EndGlobal
