@@ -28,7 +28,7 @@ namespace ContactService.Api.Controllers
         {
             Person entity = new Person();
             entity.Id = Guid.NewGuid();
-            entity.CreatedBy = Guid.NewGuid();
+            entity.CreatedBy = _currentuser.Id;
             entity.CreationDate = DateTime.Now;
             entity.Name = name;
             entity.Surname = surname;
@@ -51,6 +51,23 @@ namespace ContactService.Api.Controllers
         public Person GetPersonById(Guid id)
         {
             return _contactService.GetPersonById(id);
+        }
+        [HttpPost("AddPersonContactInfo")]
+        public bool AddPersonContactInfo(string info, Guid id, ConctactType type)
+        {
+            PersonContactInfo entity = new PersonContactInfo();
+            entity.Id = Guid.NewGuid();
+            entity.CreatedBy = _currentuser.Id;
+            entity.CreationDate = DateTime.Now;
+            entity.Contacttype = type;
+            entity.Info = info;
+            entity.IsActive = true;
+            return _contactService.AddPersonContactInfo(entity);
+        }
+        [HttpPost("deletepersoncontactinfo")]
+        public bool DeletePersonContactInfo(Guid id)
+        {
+            return _contactService.DeletePersonContactInfo(id);
         }
     }
 }
