@@ -6,11 +6,14 @@ using System.Threading.Tasks;
 
 namespace ContactService.Api.Services
 {
-    interface IContactService
+    public interface IContactService
     {
-        bool AddPerson();
-        bool AddPersonContactInfo();
-        Person GetPersonById();
-        
+        bool AddPerson(Person entity);
+        bool DeletePerson(Guid id);
+        bool AddPersonContactInfo(PersonContactInfo entity);
+        bool DeletePersonContactInfo(Guid id);
+        List<Person> GetPersons();
+        Person GetPersonById(Guid id);
+
     }
 }

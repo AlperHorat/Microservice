@@ -1,4 +1,6 @@
 using ContactService.Api.Context;
+using ContactService.Api.Managers;
+using ContactService.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,7 +31,9 @@ namespace ContactService.Api
         {
             services.AddDbContext<PostgreSqlDbContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"), b=> b.MigrationsAssembly("ContactService.Api")));
             services.AddScoped<DbContext>(provider => provider.GetService<PostgreSqlDbContext>());
+            services.AddScoped<IContactService, ContactManager>();
             services.AddControllers();
+            services.AddSwaggerDocument();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -43,6 +47,8 @@ namespace ContactService.Api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
 
             app.UseAuthorization();
 

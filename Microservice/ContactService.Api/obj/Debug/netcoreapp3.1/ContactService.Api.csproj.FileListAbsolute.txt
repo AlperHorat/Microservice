@@ -41,3 +41,15 @@ C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ContactService.Api\obj\De
 C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ContactService.Api\obj\Debug\netcoreapp3.1\ContactService.Api.dll
 C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ContactService.Api\obj\Debug\netcoreapp3.1\ContactService.Api.pdb
 C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ContactService.Api\obj\Debug\netcoreapp3.1\ContactService.Api.genruntimeconfig.cache
+C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ContactService.Api\bin\Debug\netcoreapp3.1\Namotion.Reflection.dll
+C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ContactService.Api\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ContactService.Api\bin\Debug\netcoreapp3.1\NJsonSchema.dll
+C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ContactService.Api\bin\Debug\netcoreapp3.1\NJsonSchema.Yaml.dll
+C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ContactService.Api\bin\Debug\netcoreapp3.1\NSwag.Annotations.dll
+C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ContactService.Api\bin\Debug\netcoreapp3.1\NSwag.AspNetCore.dll
+C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ContactService.Api\bin\Debug\netcoreapp3.1\NSwag.Core.dll
+C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ContactService.Api\bin\Debug\netcoreapp3.1\NSwag.Core.Yaml.dll
+C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ContactService.Api\bin\Debug\netcoreapp3.1\NSwag.Generation.dll
+C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ContactService.Api\bin\Debug\netcoreapp3.1\NSwag.Generation.AspNetCore.dll
+C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ContactService.Api\bin\Debug\netcoreapp3.1\YamlDotNet.dll
+C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ContactService.Api\obj\Debug\netcoreapp3.1\ContactService.Api.MvcApplicationPartsAssemblyInfo.cs
