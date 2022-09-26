@@ -24,7 +24,7 @@ namespace ContactService.Api.Controllers
             this._currentuser = UserData.UserList.FirstOrDefault();// buradan kullanıcı set ederek createdbya standart bi veri atabilmek için
         }
         [HttpPost("addperson")]
-        public bool AddPerson(string name, string surname, string firm)
+        public ActionResult AddPerson(string name, string surname, string firm)
         {
             Person entity = new Person();
             entity.Id = Guid.NewGuid();
@@ -34,17 +34,26 @@ namespace ContactService.Api.Controllers
             entity.Surname = surname;
             entity.Firm = firm;
             entity.IsActive = true;
-            return _contactService.AddPerson(entity);
+
+            var result = _contactService.AddPerson(entity);
+            if (result)
+                return Ok("Kişi ekleme işlemi başarılı. Eklenen Id= " + entity.Id);
+            else
+                return BadRequest("Kişi eklenirken bir hata oluştu.");
         }
         [HttpGet("getpersonlist")]
-        public List<Person> GetPersonById()
+        public List<Person> GetPersons()
         {
             return _contactService.GetPersons();
         }
         [HttpPost("deleteperson")]
-        public bool DeletePerson(Guid id)
+        public ActionResult DeletePerson(Guid id)
         {
-            return _contactService.DeletePerson(id);
+            var result = _contactService.DeletePerson(id);
+            if (result)
+                return Ok("Kişi silme işlemi başarılı");
+            else
+                return BadRequest("Kişi silinirken bir hata oluştu.");
         }
 
         [HttpGet("getpersonbyid")]
@@ -53,7 +62,7 @@ namespace ContactService.Api.Controllers
             return _contactService.GetPersonById(id);
         }
         [HttpPost("AddPersonContactInfo")]
-        public bool AddPersonContactInfo(string info, Guid id, ConctactType type)
+        public ActionResult AddPersonContactInfo(string info, Guid personid, ContactType type)
         {
             PersonContactInfo entity = new PersonContactInfo();
             entity.Id = Guid.NewGuid();
@@ -61,13 +70,28 @@ namespace ContactService.Api.Controllers
             entity.CreationDate = DateTime.Now;
             entity.Contacttype = type;
             entity.Info = info;
+            entity.PersonId = personid;
             entity.IsActive = true;
-            return _contactService.AddPersonContactInfo(entity);
+
+            var result = _contactService.AddPersonContactInfo(entity);
+            if (result)
+                return Ok("Kişi iletişim bilgisi ekleme işlemi başarılı. Id= " + entity.Id);
+            else
+                return BadRequest("Kişi iletişim bilgisi eklenirken bir hata oluştu.");
         }
         [HttpPost("deletepersoncontactinfo")]
-        public bool DeletePersonContactInfo(Guid id)
+        public ActionResult DeletePersonContactInfo(Guid id)
         {
-            return _contactService.DeletePersonContactInfo(id);
+            var result = _contactService.DeletePersonContactInfo(id);
+            if (result)
+                return Ok("Kişi iletişim bilgisi silme işlemi başarılı");
+            else
+                return BadRequest("Kişi iletişim bilgisi silinirken bir hata oluştu.");
+        }
+        [HttpGet("GetPersonContactsByPersonId")]
+        public PersonContacts GetPersonContacts(Guid personid)
+        {
+            return _contactService.GetPersonContacts(personid);
         }
     }
 }
