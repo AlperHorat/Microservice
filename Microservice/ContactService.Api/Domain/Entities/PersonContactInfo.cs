@@ -9,11 +9,11 @@ namespace ContactService.Api.Domain.Entities
     public class PersonContactInfo : BaseEntity
     {
         public Guid PersonId { get; set; }
-        public ConctactType Contacttype { get; set; }
+        public ContactType Contacttype { get; set; }
         public string Info { get; set; }
     }
 
-    public enum ConctactType
+    public enum ContactType
     {
         Phone = 0,
         EMail = 1,

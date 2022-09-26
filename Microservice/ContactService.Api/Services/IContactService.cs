@@ -1,4 +1,5 @@
 ﻿using ContactService.Api.Domain.Entities;
+using ContactService.Api.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace ContactService.Api.Services
         bool DeletePersonContactInfo(Guid id);
         List<Person> GetPersons();
         Person GetPersonById(Guid id);
+        PersonContacts GetPersonContacts(Guid personid);
 
     }
 }
