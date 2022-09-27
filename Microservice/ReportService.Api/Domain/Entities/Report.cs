@@ -9,7 +9,7 @@ namespace ReportService.Api.Domain.Entities
     {
         public Guid Id { get; set; }
         public DateTime ReportDate { get; set; }
-        public ReportType ReportStatus { get; set; }
+        public ReportType? ReportStatus { get; set; }
         public string ReportUrl { get; set; }
     }
     public enum ReportType

@@ -17,7 +17,7 @@ namespace ContactService.Api.Domain.Models
         {
             ContactTypeList.Add(new ContactTypeData { Id = ContactType.Phone, Description="Phone" });
             ContactTypeList.Add(new ContactTypeData { Id = ContactType.EMail, Description = "EMail" });
-            ContactTypeList.Add(new ContactTypeData { Id = ContactType.Location, Description = "Localiton" });
+            ContactTypeList.Add(new ContactTypeData { Id = ContactType.Location, Description = "Location" });
         }
     }
 }
