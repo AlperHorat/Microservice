@@ -16,6 +16,7 @@ namespace ContactService.Api.Services
         List<Person> GetPersons();
         Person GetPersonById(Guid id);
         PersonContacts GetPersonContacts(Guid personid);
+        public List<ContactReportModel> GetContactReport();
 
     }
 }

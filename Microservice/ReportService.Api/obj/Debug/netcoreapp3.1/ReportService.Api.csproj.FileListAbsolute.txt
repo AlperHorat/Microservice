@@ -53,3 +53,5 @@ C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ReportService.Api\bin\Deb
 C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ReportService.Api\bin\Debug\netcoreapp3.1\YamlDotNet.dll
 C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ReportService.Api\obj\Debug\netcoreapp3.1\ReportService.Api.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ReportService.Api\obj\Debug\netcoreapp3.1\ReportService.Api.csproj.CopyComplete
+C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ReportService.Api\bin\Debug\netcoreapp3.1\RabbitMQ.Client.dll
+C:\Users\ZB\Documents\GitHub\Microservice\Microservice\ReportService.Api\bin\Debug\netcoreapp3.1\System.Threading.Channels.dll
