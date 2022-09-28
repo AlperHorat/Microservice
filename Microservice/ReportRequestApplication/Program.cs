@@ -1,11 +1,18 @@
-﻿using Newtonsoft.Json;
+﻿using ClosedXML.Excel;
+using Newtonsoft.Json;
+using NPOI.SS.UserModel;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using ReportRequestApplication.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ReportRequestApplication
 {
@@ -33,18 +40,54 @@ namespace ReportRequestApplication
             channel.QueueBind(ReportCreated, ReportCreatedExChange, ReportCreated);
 
 
-            //doküman oluşturma talebi
-            //CreateReportRequest();
-            //Console.WriteLine("Doküman oluşturma talebi gönderildi!");
-            //Console.ReadKey();
-
             //doküman talebi okuma ve oluşturup geri dönüş
             GetReportRequestAndGetData();
             //Console.ReadKey();
 
-            //doküman sonucunu alma
-            GetDataAndCreateReport();
+            //doküman sonucunu alma ve tamamlandı durumuna getirme
+            GetDataAndCompleteReport();
             Console.ReadKey();
+        }
+        private static string ExportExcel<T>(List<T> exportData, string id)
+        {
+            XLWorkbook workbook = new XLWorkbook();
+            DataTable table = new DataTable() { TableName = "New Worksheet" };
+            DataSet ds = new DataSet();
+
+            List<string> _headers = new List<string>();
+            List<string> _type = new List<string>();
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
+
+            foreach (PropertyDescriptor prop in properties)
+            {
+                var type = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
+                _type.Add(type.Name);
+                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ??
+                                  prop.PropertyType);
+                string name = Regex.Replace(prop.Name, "([A-Z])", " $1").Trim(); //space separated 
+                                                                                 //name by caps for header
+                _headers.Add(name);
+            }
+
+            foreach (T item in exportData)
+            {
+                DataRow row = table.NewRow();
+                foreach (PropertyDescriptor prop in properties)
+                    row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                table.Rows.Add(row);
+            }
+
+            //Convert datatable to dataset and add it to the workbook as worksheet
+            ds.Tables.Add(table);
+            workbook.Worksheets.Add(ds);
+
+            //save
+            //string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string desktopPath = Environment.CurrentDirectory + "\\ReportExcel";
+            string savePath = Path.Combine(desktopPath, "rapor" + id + ".xlsx");
+            workbook.SaveAs(savePath, false);
+
+            return savePath;
         }
         private static void WriteToQueue(string queuename, ReportRequestModel model)
         {
@@ -99,25 +142,44 @@ namespace ReportRequestApplication
 
 
 
-                Console.WriteLine($"Received Data : {responseInfo.Content.ReadAsStringAsync().Result }");
+                //Console.WriteLine($"Received Data : {responseInfo.Content.ReadAsStringAsync().Result }");
+                
+                model.ReportUrl = ExportExcel<ContactReportModel>(serviceresult, model.Id.ToString());
 
-                model.ReportUrl = "Testurl";
-
+                Console.WriteLine("Alınan datalar ile excel raporu oluşturularak excel url bilgisi gönderildi.!");
                 WriteToQueue(ReportCreated, model);
             };
 
             channel.BasicConsume(CreateReport, true, consumerEvent);
         }
-        static void GetDataAndCreateReport()
+        static void GetDataAndCompleteReport()
         {
             var consumerEvent2 = new EventingBasicConsumer(channel);
 
             consumerEvent2.Received += (ch, ea) =>
             {
-                Console.WriteLine("Datalar alındı ve doküman oluşturuldu!");
                 var modeljson = Encoding.UTF8.GetString(ea.Body.ToArray());
                 var model = JsonConvert.DeserializeObject<ReportRequestModel>(modeljson);
+                model.ReportStatus = ReportType.Tamamlandı;
+                //gelen veri raporun url si ve durumu tamamlandı olarak report tablosunda güncelleniyor.
+                HttpClientHandler handler = new HttpClientHandler();
+                HttpClient client = new HttpClient(handler);
 
+                var json = JsonConvert.SerializeObject(model);
+                var request = new HttpRequestMessage
+                {
+                    Method = HttpMethod.Post,
+                    RequestUri = new Uri("https://localhost:44326/api/report/updaterequest/"),
+
+                    Content = new StringContent(json, Encoding.UTF8, "application/json")
+                };
+                var response = client.SendAsync(request).ConfigureAwait(false);
+
+                var responseInfo = response.GetAwaiter().GetResult();
+                if (responseInfo.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    Console.WriteLine("Rapor url bilgisi alındı ve rapor tablosundaki veriler güncellendi!");
+                }
                 //Console.WriteLine($"Received Data : { modeljson}");
             };
 
