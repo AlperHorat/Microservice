@@ -29,6 +29,14 @@ namespace ContactService.Api.Controllers
         [HttpPost("addperson")]
         public ActionResult AddPerson(string name, string surname, string firm)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                return BadRequest("İsim alanı zorunludur.");
+            }
+            if (string.IsNullOrEmpty(surname))
+            {
+                return BadRequest("Soyisim alanı zorunludur.");
+            }
             Person entity = new Person();
             entity.Id = Guid.NewGuid();
             entity.CreatedBy = _currentuser.Id;
@@ -67,6 +75,15 @@ namespace ContactService.Api.Controllers
         [HttpPost("AddPersonContactInfo")]
         public ActionResult AddPersonContactInfo(string info, Guid personid, ContactType type)
         {
+            if (string.IsNullOrEmpty(info))
+            {
+                return BadRequest("Bilgi alanı zorunludur.");
+            }
+            var personentity = _contactService.GetPersonById(personid);
+            if (personentity == null)
+            {
+                return BadRequest("İletişim bilgisi eklenmesi istenilen kişi sistemde kayıtlı değildir.");
+            }
             PersonContactInfo entity = new PersonContactInfo();
             entity.Id = Guid.NewGuid();
             entity.CreatedBy = _currentuser.Id;
@@ -109,14 +126,14 @@ namespace ContactService.Api.Controllers
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
-                RequestUri = new Uri("https://localhost:44326/api/report/updaterequest/"),
+                RequestUri = new Uri(Values.ReportServiceHost + "api/report/updaterequest/"),
 
                 Content = new StringContent(json, Encoding.UTF8, "application/json")
             };
             var response = client.SendAsync(request).ConfigureAwait(false);
 
             var responseInfo = response.GetAwaiter().GetResult();
-            if(responseInfo.StatusCode == System.Net.HttpStatusCode.OK)
+            if (responseInfo.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 return _contactService.GetContactReport();
             }

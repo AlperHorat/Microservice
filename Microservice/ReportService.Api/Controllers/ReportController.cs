@@ -72,7 +72,7 @@ namespace ReportService.Api.Controllers
             Report entity = new Report();
             entity.Id = Guid.NewGuid();
             entity.ReportDate = DateTime.Now;
-            entity.ReportStatus = ReportType.Hazırlanıyor;
+            entity.ReportStatus = null; //ilk talep olduğu için değer atanmadı
 
             var result = _reportService.AddReportRequest(entity);
             if (result)
@@ -88,6 +88,10 @@ namespace ReportService.Api.Controllers
         public ActionResult UpdateReportRequest([FromBody] ReportRequestModel requestentity)
         {
             var entity = _reportService.GetReportById(requestentity.Id);
+            if(entity == null)
+            {
+                return BadRequest("Güncellenmek istenilen rapor kaydı sistemde mevcut değil.");
+            }
             entity.ReportStatus = requestentity.ReportStatus;
             entity.ReportUrl = requestentity.ReportUrl;
 
@@ -98,12 +102,12 @@ namespace ReportService.Api.Controllers
                 return BadRequest("Rapor talebi tamamlanırken bir hata oluştu.");
         }
         [HttpGet("getreportlist")]
-        public List<ReportModel> GetPersons()
+        public List<ReportModel> GetReports()
         {
             return _reportService.GetReports();
         }
         [HttpGet("getreportbyid")]
-        public Report GetPersons(Guid id)
+        public Report GetReportById(Guid id)
         {
             return _reportService.GetReportById(id);
         }

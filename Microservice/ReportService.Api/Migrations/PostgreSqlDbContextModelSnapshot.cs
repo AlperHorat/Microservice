@@ -28,7 +28,7 @@ namespace ReportService.Api.Migrations
                     b.Property<DateTime>("ReportDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("ReportStatus")
+                    b.Property<int?>("ReportStatus")
                         .HasColumnType("integer");
 
                     b.Property<string>("ReportUrl")
