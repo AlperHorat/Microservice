@@ -4,9 +4,12 @@ using ContactService.Api.Domain.Models;
 using ContactService.Api.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ContactService.Api.Controllers
@@ -26,6 +29,14 @@ namespace ContactService.Api.Controllers
         [HttpPost("addperson")]
         public ActionResult AddPerson(string name, string surname, string firm)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                return BadRequest("İsim alanı zorunludur.");
+            }
+            if (string.IsNullOrEmpty(surname))
+            {
+                return BadRequest("Soyisim alanı zorunludur.");
+            }
             Person entity = new Person();
             entity.Id = Guid.NewGuid();
             entity.CreatedBy = _currentuser.Id;
@@ -64,6 +75,15 @@ namespace ContactService.Api.Controllers
         [HttpPost("AddPersonContactInfo")]
         public ActionResult AddPersonContactInfo(string info, Guid personid, ContactType type)
         {
+            if (string.IsNullOrEmpty(info))
+            {
+                return BadRequest("Bilgi alanı zorunludur.");
+            }
+            var personentity = _contactService.GetPersonById(personid);
+            if (personentity == null)
+            {
+                return BadRequest("İletişim bilgisi eklenmesi istenilen kişi sistemde kayıtlı değildir.");
+            }
             PersonContactInfo entity = new PersonContactInfo();
             entity.Id = Guid.NewGuid();
             entity.CreatedBy = _currentuser.Id;
@@ -92,6 +112,35 @@ namespace ContactService.Api.Controllers
         public PersonContacts GetPersonContacts(Guid personid)
         {
             return _contactService.GetPersonContacts(personid);
+        }
+
+        [HttpGet("GetContactReport")]
+        public List<ContactReportModel> GetContactReport([FromBody] ReportRequestModel entity)
+        {
+            entity.ReportStatus = ReportType.Hazırlanıyor; //rapor dataları hazırlanırken raporservisinde durum güncellemesi yapılıyor
+
+            HttpClientHandler handler = new HttpClientHandler();
+            HttpClient client = new HttpClient(handler);
+
+            var json = JsonConvert.SerializeObject(entity);
+            var request = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri(Values.ReportServiceHost + "api/report/updaterequest/"),
+
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
+            var response = client.SendAsync(request).ConfigureAwait(false);
+
+            var responseInfo = response.GetAwaiter().GetResult();
+            if (responseInfo.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return _contactService.GetContactReport();
+            }
+            else
+            {
+                return new List<ContactReportModel>();
+            }
         }
     }
 }

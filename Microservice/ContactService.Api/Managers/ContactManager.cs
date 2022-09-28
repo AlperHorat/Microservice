@@ -113,5 +113,37 @@ namespace ContactService.Api.Managers
             else
                 return null;
         }
+
+        public List<ContactReportModel> GetContactReport()
+        {
+            List<ContactReportModel> list = new List<ContactReportModel>();
+            var contactinfolist = _context.PersonContactInfo.Where(a => a.Contacttype == ContactType.Location && a.IsActive == true).ToList();
+            var grouplist = contactinfolist.GroupBy(x => x.Info)
+              .Select(g => new { Info = g.FirstOrDefault().Info, PersonId = g.FirstOrDefault().PersonId , ItemsCount = g.Count() }).ToList();
+
+
+            foreach (var item in contactinfolist)
+            {
+                if(list.Where(a=> a.Location == item.Info).Count() == 0)
+                {
+                    ContactReportModel entity = new ContactReportModel();
+                    entity.Location = item.Info;
+                    entity.PersonCount = grouplist.Where(a => a.Info == item.Info).FirstOrDefault().ItemsCount;
+                    
+                    var personlist = _context.PersonContactInfo.Where(a => a.Info == item.Info && a.Contacttype == ContactType.Location && a.IsActive == true).ToList();
+                    foreach (var item2 in personlist)
+                    {
+                        var count = _context.PersonContactInfo.Where(a => a.PersonId == item2.PersonId && a.Contacttype == ContactType.Phone).Count();
+                        entity.PhoneCount += count;
+                    }
+
+
+                    list.Add(entity);
+                }
+ 
+                
+            }
+            return list;
+        }
     }
 }
