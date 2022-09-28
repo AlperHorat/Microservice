@@ -130,7 +130,7 @@ namespace ReportRequestApplication
                 var request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Get,
-                    RequestUri = new Uri("https://localhost:44308/api/contact/GetContactReport/"),
+                    RequestUri = new Uri(Values.ContactServiceHost + "api/contact/GetContactReport/"),
 
                     Content = new StringContent(modeljson, Encoding.UTF8, "application/json")
                 };
