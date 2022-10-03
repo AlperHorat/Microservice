@@ -1,48 +1,46 @@
 ﻿using ReportService.Api.Context;
 using Microsoft.EntityFrameworkCore;
-using ReportService.Api.Controllers;
 using ReportService.Api.Managers;
-using ReportService.Api.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
-using Microsoft.AspNetCore.Mvc;
-using ReportService.Api.Domain.Models;
+using ReportService.Api.Domain.Entities;
 
 namespace Microservice.Tests
 {
-    public class ReportControllerTests
+    public class ReportManagerTests
     {
-        private readonly IReportService _service;
-        private readonly ReportController _controller;
+        private readonly ReportManager _manager;
 
-        public ReportControllerTests()
+        public ReportManagerTests()
         {
             var options = new DbContextOptionsBuilder<PostgreSqlDbContext>().UseNpgsql(Values.ReportConString).Options;
 
             var _context = new PostgreSqlDbContext(options);
-            _service = new ReportManager(_context);
-            _controller = new ReportController(_service);
+            _manager = new ReportManager(_context);
         }
         [Fact]
         public void GetReports_NotNullControl()
         {
             // Act
-            var result = _controller.GetReports();
+            var result = _manager.GetReports();
 
             // Assert
             Assert.NotNull(result);
         }
         [Fact]
-        public void AddReportRequest__ReturnsOkRequest()
+        public void AddReportRequest__ReturnsTrue()
         {
             // Arrange
+            Report entity = new Report();
+            entity.Id = Guid.NewGuid();
+            entity.ReportDate = DateTime.Now;
+            entity.ReportStatus = ReportType.Hazırlanıyor;
             // Act
-            var Response = _controller.AddReportRequest();
-            var result = Response.GetAwaiter().GetResult();
+            var Response = _manager.AddReportRequest(entity);
             // Assert
-            Assert.IsType<OkObjectResult>(result);
+            Assert.True(true.Equals(Response));
         }
         [Fact]
         public void GetReportById_InvalidObjectPassed_ReturnsNull()
@@ -50,24 +48,24 @@ namespace Microservice.Tests
             // Arrange
             Guid id = new Guid();
             // Act
-            var response = _controller.GetReportById(id);
+            var response = _manager.GetReportById(id);
 
             // Assert
             Assert.Null(response);
         }
         [Fact]
-        public void UpdateReportRequest_InvalidObjectPassed_ReturnsBadRequest()
+        public void UpdateReportRequest_InvalidObjectPassed_ReturnsFalse()
         {
             // Arrange
-            ReportRequestModel entity = new ReportRequestModel();
+            Report entity = new Report();
             entity.Id = Guid.NewGuid();
             entity.ReportDate = DateTime.Now;
             entity.ReportStatus = null;
             // Act
-            var badResponse = _controller.UpdateReportRequest(entity);
+            var Response = _manager.UpdateReportRequest(entity);
 
             // Assert
-            Assert.IsType<BadRequestObjectResult>(badResponse);
+            Assert.True(false.Equals(Response));
         }
     }
 }
