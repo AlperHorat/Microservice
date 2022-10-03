@@ -48,7 +48,7 @@ namespace ReportService.Api.Managers
                 entity.Id = item.Id;
                 entity.ReportDate = item.ReportDate;
                 entity.ReportUrl = item.ReportUrl;
-                entity.ReportStatusDesc = ReportTypeData.ReportTypeDataList.Where(a => a.Id == item.ReportStatus).FirstOrDefault().Description;
+                entity.ReportStatusDesc = item.ReportStatus == null ? null : ReportTypeData.ReportTypeDataList.Where(a => a.Id == item.ReportStatus).FirstOrDefault().Description;
 
                 list.Add(entity);
             }
