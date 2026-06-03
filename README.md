@@ -1,44 +1,135 @@
-# Microservice
-Mikroservis mimarisi kullanılarak 2 adet servis projesi 1 adet console application projesi
-ile rehbere kişi tanımlama ve kişiye iletişim(Email,telefon,konum) bilgilerini tanımlamaya yarayan ve
-bu verilerin raporlanmasını kuyruk mekanizması kullanarak sağlayan bir projedir.
+# Microservice Architecture Project 🧩
 
-# Nasıl Kullanılır
--Contact Servisi ilk çalıştığında karşımıza swagger ekranı gelmektedir.
-Bu ekrandan ilgili servisler kullanılarak kişi ekleme, kişi silme, kişiye iletişim bilgisi ekleme vb. faaliyetler yapılabilmektedir.
+This project is a .NET-based microservices system designed to manage a simple contact directory and generate reports using a queue-based asynchronous architecture.
 
--Report Servisi ilk çalıştığında karşımıza swagger ekranı gelmektedir.
-Bu ekrandan rapor oluşturma talebi, raporların listelenmesi, raporun detayı gibi faaliyetler yapılabilmektedir.
+The system demonstrates distributed system design using message-driven communication and background processing.
 
--ConsoleApplication direk çalıştığı andan itibaren gelebilecek rapor taleplerini dinlemeye başlamaktadır. Eğer ki rapor talebi
-geldiği durumda süreçleri ilerletmektedir.
+---
 
-# Raporlama Süreci
--Sistemde gerekli datalar tanımlandıktan sonra rehberden rapor çekilmesi istenildiğinde
-raporlarda darboğaz yaratmadan kuyruk mekanizması kullanılarak raporlamalar sonuçlandırılmaktadır.
+## 🧠 Project Overview
 
--Sistemin en doğru şekilde çalışması için 3 projenin de çoklu çalıştırılması gerekmektedir.
+The system consists of:
 
--Consolapplication projesi çalışırken her an rapor taleplerini dinlemeye başlamaktadır.
+- 2 REST API microservices
+- 1 console application (background worker)
+- 1 unit test project
+- RabbitMQ-based message queue system
 
--ReportService swagger dokümanı üzerinden "addreportrequest" servisi çalıştırıldığında rapor isteği talebi rapor talepleri kuyruğuna iletilir.
+The main goal is to simulate a scalable architecture where report generation is handled asynchronously without blocking the main services.
 
--Oluşturulan talep consol uygulaması tarafından kuyruktaki sıra ile algılanır ve rapor talebine istinaden ContactServise ile iletişime
-geçerek gerekli dataları çeker.
+---
 
--Consol uygulaması gelen datalar ile excel tablosu oluşturur ve kaydettiği yolu talepdatası üzerinde güncelleyerek
-rapora dair dataları oluşturulan raporlar kuyruğuna gönderir.
+## 📦 System Components
 
--Oluşturulan raporlar kuyruğunda gelen rapor bilgileri incelenir ve rapor süreci tamamlandı olarak ilgili alanlar güncellenir ve rapor süreci tamamlanır.
+### 1. Contact Service (ASP.NET Core Web API)
+Responsible for managing contact data.
 
- # Teknik bilgiler
- 
- -2 adet servis projesi .NET CORE WEB API kullanılarak yazılmıştır.
- 
- -1 adet consolapplication projesi .NET CORE CONSOLEAPPLICATION kullanılarak yazılmıştır.
- 
- -1 adet unittest projesi .NET CORE XUNITTEST kullanılarak yazılmıştır.
- 
- -Message Broker olarak RabbitMQ kullanılmıştır.
- 
- -2 servis için 2 ayrı veritabanı PostgreSQL kullanılmıştır.
+**Features:**
+- Create / delete person
+- Add contact information (email, phone, location)
+- Manage directory data via REST APIs
+- Swagger documentation available
+
+---
+
+### 2. Report Service (ASP.NET Core Web API)
+Responsible for report management and request handling.
+
+**Features:**
+- Create report request
+- List reports
+- View report details
+- Publishes report requests to message queue
+
+---
+
+### 3. Console Application (Background Worker)
+
+Acts as a queue consumer.
+
+**Responsibilities:**
+- Continuously listens to report request queue
+- Fetches required data from Contact Service
+- Generates report file (Excel)
+- Updates report status
+- Publishes completed report data to result queue
+
+---
+
+### 4. Unit Test Project
+
+- Built with xUnit
+- Used for testing core service logic
+
+---
+
+## 🔄 Report Generation Flow
+
+1. User sends a report request via Report Service (Swagger API)
+2. Request is published to RabbitMQ queue
+3. Console application consumes the request
+4. Console app retrieves data from Contact Service
+5. Report is generated as an Excel file
+6. File path is saved back to the system
+7. Report status is updated as completed
+8. Final result is published to report queue
+
+---
+
+## ⚙️ Architecture Highlights
+
+- Microservices architecture
+- Asynchronous processing using RabbitMQ
+- Decoupled system design
+- Database per service (PostgreSQL)
+- Background worker processing model
+
+---
+
+## 🛠️ Technologies Used
+
+- .NET Core Web API
+- .NET Core Console Application
+- xUnit Testing Framework
+- RabbitMQ (Message Broker)
+- PostgreSQL
+- Swagger (API documentation)
+
+---
+
+## 🚀 How to Run the Project
+
+> Important: All services must run simultaneously for the system to work correctly.
+
+1. Start Contact Service
+2. Start Report Service
+3. Run Console Application (Worker)
+4. Use Swagger UI on Report Service
+5. Create a report request via `AddReportRequest` endpoint
+
+---
+
+## 📚 What This Project Demonstrates
+
+- Microservices architecture design
+- Message-driven asynchronous communication
+- Background processing with queue consumers
+- Separation of concerns between services
+- Real-world distributed system workflow
+
+---
+
+## 🔮 Possible Improvements
+
+- Add API Gateway (Ocelot / YARP)
+- Add authentication (JWT)
+- Dockerize entire system
+- Add centralized logging (ELK stack)
+- Add retry & dead-letter queue handling
+- Improve observability (metrics, tracing)
+
+---
+
+## 📫 Contact
+
+GitHub: https://github.com/AlperHorat
